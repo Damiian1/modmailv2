@@ -127,7 +127,7 @@ class Modmail(commands.Bot):
         ---------------
         Client is ready!
         ---------------
-        Author: Kyb3r#7220
+        Creator: Damian#1157
         ---------------
         Logged in as: {self.user}
         User ID: {self.user.id}
@@ -151,25 +151,24 @@ class Modmail(commands.Bot):
     def help_embed(self, prefix):
         em = discord.Embed(color=0x00FFFF)
         em.set_author(name='Mod Mail - Help', icon_url=self.user.avatar_url)
-        em.description = 'This bot is a python implementation of a stateless "Mod Mail" bot. ' \
-                         'Made by Kyb3r and improved by the suggestions of others. This bot ' \
-                         'saves no data and utilises channel topics for storage and syncing.' 
+        em.description = 'This is Techwizards "Mod Mail" bot. Used to respond as swift as possible ' \
+                         'to people who might require immediate assistance from staff members.' \
+                         'Made by Damian' 
                  
 
-        cmds = f'`{prefix}setup [modrole] <- (optional)` - Command that sets up the bot.\n' \
+        cmds = f'`{prefix}setup` - Command that sets up the bot.\n' \
                f'`{prefix}reply <message...>` - Sends a message to the current thread\'s recipient.\n' \
                f'`{prefix}close` - Closes the current thread and deletes the channel.\n' \
                f'`{prefix}disable` - Closes all threads and disables modmail for the server.\n' \
-               f'`{prefix}customstatus` - Sets the Bot status to whatever you want.' \
-               f'`{prefix}block` - Blocks a user from using modmail!' \
-               f'`{prefix}unblock` - Unblocks a user from using modmail!'
+               f'`{prefix}block` - Blocks a user from using the modmail!' \
+               f'`{prefix}unblock` - Unblocks a user from using the modmail!'
 
         warn = 'Do not manually delete the category or channels as it will break the system. ' \
                'Modifying the channel topic will also break the system.'
         em.add_field(name='Commands', value=cmds)
         em.add_field(name='Warning', value=warn)
-        em.add_field(name='Github', value='https://github.com/verixx/modmail')
-        em.set_footer(text='Star the repository to unlock hidden features!')
+        em.add_field(name='Website', value='https://discordlists.com')
+        em.set_footer(text='Promote and advertise your Discord server!')
 
         return em
 
@@ -215,7 +214,7 @@ class Modmail(commands.Bot):
     async def _close(self, ctx):
         '''Close the current thread.'''
         if 'User ID:' not in str(ctx.channel.topic):
-            return await ctx.send('This is not a modmail thread.')
+            return await ctx.send('This is not the modmail thread.')
         user_id = int(ctx.channel.topic.split(': ')[1])
         user = self.get_user(user_id)
         em = discord.Embed(title='Thread Closed')
@@ -250,7 +249,7 @@ class Modmail(commands.Bot):
         member = self.guild.get_member(user.id)
         avi = user.avatar_url
         time = datetime.datetime.utcnow()
-        desc = 'Modmail thread started.'
+        desc = 'Modmail thread has started.'
         color = 0
 
         if member:
@@ -258,7 +257,7 @@ class Modmail(commands.Bot):
             rolenames = ', '.join([r.name for r in roles if r.name != "@everyone"]) or 'None'
             member_number = sorted(server.members, key=lambda m: m.joined_at).index(member) + 1
             for role in roles:
-                if str(role.color) != "#000000":
+                if str(role.color) != "#7851a9":
                     color = role.color
 
         em = discord.Embed(colour=color, description=desc, timestamp=time)
@@ -334,13 +333,13 @@ class Modmail(commands.Bot):
     @property
     def blocked_em(self):
         em = discord.Embed(title='Message not sent!', color=discord.Color.red())
-        em.description = 'You have been blocked from using modmail.'
+        em.description = 'You have been blocked from using the modmail.'
         return em
 
     async def process_modmail(self, message):
         '''Processes messages sent to the bot.'''
         try:
-            await message.add_reaction('✅')
+            await message.add_reaction('👮')
         except:
             pass
 
@@ -356,9 +355,9 @@ class Modmail(commands.Bot):
         if str(message.author.id) in blocked:
             return await message.author.send(embed=self.blocked_em)
 
-        em = discord.Embed(title='Thanks for the message!')
-        em.description = 'The moderation team will get back to you as soon as possible!'
-        em.color = discord.Color.green()
+        em = discord.Embed(title='Thank you for notifying us of any issues!')
+        em.description = 'The moderation team will try to respond to you as soon as possible!'
+        em.color = discord.Color.purple()
 
         if channel is not None:
             await self.send_mail(message, channel, mod=False)
