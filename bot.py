@@ -150,8 +150,8 @@ class Modmail(commands.Bot):
 
     def help_embed(self, prefix):
         em = discord.Embed(color=0x00FFFF)
-        em.set_author(name='Mod Mail - Help', icon_url=self.user.avatar_url)
-        em.description = 'This is the Techwizards "Mod Mail" bot. Used to respond as swift as possible ' \
+        em.set_author(name='Mod Mail - Description', icon_url=self.user.avatar_url)
+        em.description = 'This is the Techwizards "Mod Mail" bot. Used to respond as swiftly as possible ' \
                          'to people who might require immediate assistance from staff members. ' \
                          'Made by Damian.😎' 
                  
@@ -163,10 +163,11 @@ class Modmail(commands.Bot):
                f'`{prefix}block` - Blocks a user from using the modmail!' \
                f'`{prefix}unblock` - Unblocks a user from using the modmail!'
 
-        warn = 'Do not manually delete the category or channels as it will break the system. ' \
+        warn = 'Do not attempt to delete the category or channels as it will break the system. ' \
                'Modifying the channel topic will also break the system.'
         em.add_field(name='Commands', value=cmds)
         em.add_field(name='Warning', value=warn)
+        em.add_field(name='Creator', value='Damian#1157')
         em.add_field(name='Website', value='https://discordlists.com')
         em.set_footer(text='Promote and advertise your Discord server!')
 
@@ -249,7 +250,7 @@ class Modmail(commands.Bot):
         member = self.guild.get_member(user.id)
         avi = user.avatar_url
         time = datetime.datetime.utcnow()
-        desc = 'Modmail thread has started.'
+        desc = 'Modmail thread has been created.'
         color = 0
 
         if member:
@@ -296,7 +297,7 @@ class Modmail(commands.Bot):
         if mod:
             fmt.color=discord.Color.green()
             fmt.set_author(name=str(author), icon_url=author.avatar_url)
-            fmt.set_footer(text='Moderator')
+            fmt.set_footer(text='Staff Member')
         else:
             fmt.color=discord.Color.gold()
             fmt.set_author(name=str(author), icon_url=author.avatar_url)
@@ -356,7 +357,7 @@ class Modmail(commands.Bot):
             return await message.author.send(embed=self.blocked_em)
 
         em = discord.Embed(title='Thank you for notifying us of any issues!')
-        em.description = 'The moderation team will try to respond to you as soon as possible!'
+        em.description = 'Staff members will try to respond to you as soon as possible!'
         em.color = discord.Color.purple()
 
         if channel is not None:
