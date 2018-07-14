@@ -151,9 +151,9 @@ class Modmail(commands.Bot):
     def help_embed(self, prefix):
         em = discord.Embed(color=0x00FFFF)
         em.set_author(name='Mod Mail - Help', icon_url=self.user.avatar_url)
-        em.description = 'This is Techwizards "Mod Mail" bot. Used to respond as swift as possible ' \
-                         'to people who might require immediate assistance from staff members.' \
-                         'Made by Damian' 
+        em.description = 'This is the Techwizards "Mod Mail" bot. Used to respond as swift as possible ' \
+                         'to people who might require immediate assistance from staff members. ' \
+                         'Made by Damian.😎' 
                  
 
         cmds = f'`{prefix}setup` - Command that sets up the bot.\n' \
@@ -177,7 +177,7 @@ class Modmail(commands.Bot):
     async def setup(self, ctx, *, modrole: discord.Role=None):
         '''Sets up a server for modmail'''
         if discord.utils.get(ctx.guild.categories, name='Mod Mail'):
-            return await ctx.send('This server is already set up.')
+            return await ctx.send('The server has already been set up. 😅')
 
         categ = await ctx.guild.create_category(
             name='Mod Mail', 
@@ -188,7 +188,7 @@ class Modmail(commands.Bot):
         await c.edit(topic='Manually add user id\'s to block users.\n\n'
                            'Blocked\n-------\n\n')
         await c.send(embed=self.help_embed(ctx.prefix))
-        await ctx.send('Successfully set up server.')
+        await ctx.send('The server has successfully been set up. 😁 ')
 
     @commands.command()
     @commands.has_permissions(administrator=True)
@@ -218,7 +218,7 @@ class Modmail(commands.Bot):
         user_id = int(ctx.channel.topic.split(': ')[1])
         user = self.get_user(user_id)
         em = discord.Embed(title='Thread Closed')
-        em.description = f'**{ctx.author}** has closed this modmail session.'
+            em.description = f'**{ctx.author}** has closed this thead.'
         em.color = discord.Color.red()
         try:
             await user.send(embed=em)
