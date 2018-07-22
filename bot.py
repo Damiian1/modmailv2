@@ -109,7 +109,7 @@ class Modmail(commands.Bot):
     async def on_connect(self):
         print('---------------')
         print('Modmail connected!')
-        status = os.getenv('STATUS')
+        status = ('DM me to contact staff!')
         if status:
             print(f'Setting Status to {status}')
         else:
@@ -149,9 +149,9 @@ class Modmail(commands.Bot):
         return overwrites
 
     def help_embed(self, prefix):
-        em = discord.Embed(color=0x00FFFF)
+        em = discord.Embed(color=0x7851a9)
         em.set_author(name='Mod Mail - Description', icon_url=self.user.avatar_url)
-        em.description = 'This is the Techwizards "Mod Mail" bot. Used to respond as swiftly as possible ' \
+        em.description = 'This is the Techwizards "Mod Mail" bot. It is used to respond as swiftly as possible ' \
                          'to people who might require immediate assistance from staff members. ' \
                          'Made by Damian.😎' 
                  
@@ -160,7 +160,7 @@ class Modmail(commands.Bot):
                f'`{prefix}reply <message...>` - Sends a message to the current thread\'s recipient.\n' \
                f'`{prefix}close` - Closes the current thread and deletes the channel.\n' \
                f'`{prefix}disable` - Closes all threads and disables modmail for the server.\n' \
-               f'`{prefix}block` - Blocks a user from using the modmail!' \
+               f'`{prefix}block` - Blocks a user from using the modmail!\n' \
                f'`{prefix}unblock` - Unblocks a user from using the modmail!'
 
         warn = 'Do not attempt to delete the category or channels as it will break the system. ' \
@@ -185,7 +185,7 @@ class Modmail(commands.Bot):
             overwrites=self.overwrites(ctx, modrole=modrole)
             )
         await categ.edit(position=0)
-        c = await ctx.guild.create_text_channel(name='bot-info', category=categ)
+        c = await ctx.guild.create_text_channel(name='modmail-info', category=categ)
         await c.edit(topic='Manually add user id\'s to block users.\n\n'
                            'Blocked\n-------\n\n')
         await c.send(embed=self.help_embed(ctx.prefix))
@@ -207,7 +207,7 @@ class Modmail(commands.Bot):
                         await user.send(f'**{ctx.author}** has closed this modmail session.')
                     await chan.delete()
         await categ.delete()
-        await ctx.send('Disabled modmail.')
+        await ctx.send('Disabled modmail. 😴')
 
 
     @commands.command(name='close')
@@ -429,7 +429,7 @@ class Modmail(commands.Bot):
                 return await ctx.send('No User ID provided.')
 
         categ = discord.utils.get(ctx.guild.categories, name='Mod Mail')
-        top_chan = categ.channels[0] #bot-info
+        top_chan = categ.channels[0] #modmail-info
         topic = str(top_chan.topic)
         topic = topic.replace(id+'\n', '')
 
